@@ -1,0 +1,39 @@
+[
+    uuid(4556509F-618A-46CE-9C8B-A35081E29F96),
+    version(1.0),
+    pointer_default(unique)
+]
+interface AntivirusRPC
+{
+    // Остановка службы
+    void RpcStopAntivirusService([in] handle_t Binding);
+
+    // Получить текущий статус (Аутентификация + Лицензия)
+    void RpcGetStatus(
+        [in] handle_t Binding, 
+        [out] boolean* isAuthenticated,
+        [out] wchar_t username[256], 
+        [out] boolean* hasLicense, 
+        [out] wchar_t licenseExpires[64]
+    );
+
+    // Вход в учетную запись
+    boolean RpcLogin(
+        [in] handle_t Binding, 
+        [in] const wchar_t* email, 
+        [in] const wchar_t* password, 
+        [out] wchar_t errorMsg[256]
+    );
+
+    // Выход из учетной записи
+    void RpcLogout([in] handle_t Binding);
+
+    // Активация продукта
+    boolean RpcActivateProduct(
+        [in] handle_t Binding, 
+        [in] const wchar_t* activationCode, 
+        [out] wchar_t errorMsg[256]
+    );
+    void RpcScanFile([in] handle_t Binding, [in, string] const wchar_t* path);
+    
+}
