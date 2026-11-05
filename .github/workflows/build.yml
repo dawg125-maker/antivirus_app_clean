@@ -1,0 +1,22 @@
+name: CMake Windows Build
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+    # Обновлено до v4
+    - uses: actions/checkout@v4
+    
+    - name: Configure CMake
+      run: cmake -B build -S .
+
+    - name: Build
+      run: cmake --build build --config Release
+
+    - name: Upload Artifact
+      # Обновлено до v4
+      uses: actions/upload-artifact@v4
+      with:
+        name: TrayApp-Executable
+        path: build/Release/TrayApp.exe
